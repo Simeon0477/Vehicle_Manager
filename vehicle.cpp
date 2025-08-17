@@ -315,7 +315,7 @@ Vehicle* Garage::operator[](int index) {
 
 //Affichage des caractéristiques de chaque véhicule
 void Garage::showVehicle() {
-    cout << "\n\n CARACTERISTIQUES DES VEHICULES \n\n" << endl;
+    cout << "\n CARACTERISTIQUES DES VEHICULES \n" << endl;
     for(int i = 0; i < m_size; i++) {
         cout << "Vehicule N° " << i << endl;
         m_vehicules[i]->ShowCharacteristics();
@@ -332,14 +332,13 @@ void Garage::CostCalculation(int index) {
 }
 
 //Recherche d'un véhicule
-Vehicle* Garage::VehicleSearch(const char* immat) {
+void Garage::VehicleSearch(const char* immat) {
     for(int i = 0; i < m_size; i++) {
         if(compare(immat, m_vehicules[i]->GetImmatriculation())){
-            return m_vehicules[i];
+            cout << "Résultat de la recherche : " << endl;
+            m_vehicules[i]->ShowCharacteristics();
         }
     }
-
-    return nullptr;
 }
 
 //Destructeur
