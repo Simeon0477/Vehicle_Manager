@@ -29,9 +29,9 @@ bool compare(const char* chaine1, const char* chaine2) {
 }
 
 
-/*
+/*---------------------------------------------------------------------------------
 Classe Parent VEHICLE
-*/
+---------------------------------------------------------------------------------*/
 
 //Constructeur par défaut
 Vehicle::Vehicle() {
@@ -112,9 +112,9 @@ float Vehicle::MaintenanceCost(){
 }
 
 
-/*
-Classe Dérivée Car
-*/
+/*---------------------------------------------------------------------------------
+Classe Dérivée CAR
+---------------------------------------------------------------------------------*/
 
 // Constructeur par défaut
 Car::Car() : Vehicle() {
@@ -170,9 +170,9 @@ float Car::MaintenanceCost() {
     return (0.02 * GetPrix() + 5 * (2025 - GetAnnee()) + 0.001 * GetPoids() + B_segment + B_portes) * facteurCarburant();
 }
 
-/*
-Classe Dérivée Motorcycle
-*/
+/*---------------------------------------------------------------------------------
+Classe Dérivée MOTORCYCLE
+---------------------------------------------------------------------------------*/
 
 // Constructeur par défaut
 Motorcycle::Motorcycle() : Vehicle() {
@@ -229,9 +229,9 @@ float Motorcycle::MaintenanceCost() {
 }
 
 
-/*
-Classe Dérivée Truck
-*/
+/*---------------------------------------------------------------------------------
+Classe Dérivée TRUCk
+---------------------------------------------------------------------------------*/
 
 // Constructeur par défaut
 Truck::Truck() : Vehicle() {
@@ -274,9 +274,10 @@ float Truck::MaintenanceCost() {
     return (0.04 * GetPrix() + 8 * (2025 - GetAnnee()) + 0.0015 * GetPoids() + (m_chargeUtile / 100) + 50 * (m_nombreEssieux - 2)) * facteurCarburant();
 }
 
-/*
-Classe Garage
-*/
+
+/*---------------------------------------------------------------------------------
+Classe GARAGE
+---------------------------------------------------------------------------------*/
 
 // Constructeur par défaut
 Garage::Garage() {
