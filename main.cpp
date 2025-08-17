@@ -27,7 +27,16 @@ int main(){
                 break;
 
             case 2:
+                int vehicle_choice;
                 cout << "\n\033[32m2 - Ajouter un véhicule \n\n\033[0m";
+                cout << "Quel type de véhicule voulez vous ajouter? : " 
+                     << "\n 1 - Voiture"
+                     << "\n 2 - Moto"
+                     << "\n 3 - Camion"
+                     << endl;
+                cin << vehicle_choice;
+
+                //Enregistrement des informations
                 
                 break;
                                             
