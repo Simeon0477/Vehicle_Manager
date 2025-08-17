@@ -284,6 +284,9 @@ Garage::Garage() {
     m_vehicules = new Vehicle*[m_capacity];
 }
 
+//Getters
+int Truck::GetSize() { return m_size; }
+
 //Agrandissement du tableau
 void Garage::Growth(){
     if (m_size >= m_capacity) {

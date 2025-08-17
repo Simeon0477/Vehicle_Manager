@@ -4,7 +4,7 @@
 using namespace std;
 
 Garage garage;
-int choix, ind;
+int choix, index;
 char immatriculation[10];
 Car *car;
 Motorcycle *motorcycle;
@@ -103,7 +103,17 @@ int main(){
                 
             case 4:
                 cout << "\n\033[32m3 - Calculer le coût d'entretien d'un véhicule \n\n\033[0m";
-                
+                while(1){
+                    printf("Entrez l'index du véhicule : ");
+                    cin >> index;
+                    if (index < 1 || index > garage.GetSize()) {
+                        printf("Index invalide, réessayez\n");
+                    }else{
+                        break;
+                    }
+                }
+
+                scoreBoard.deleteScore(ind);
                 break;
 
             case 5:

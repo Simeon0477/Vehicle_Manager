@@ -141,6 +141,9 @@ class Garage{
         //Constructeurs
         Garage();
 
+        //Getters
+        int GetSize();
+
         //Agrandissement du tableau
         void Growth(); 
 
