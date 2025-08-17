@@ -43,7 +43,7 @@ Vehicle::Vehicle() {
 }
 
 //Constructeur paramétré
-Vehicle::Vehicle(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix) {
+Vehicle::Vehicle(const char *immatriculation, const char *typeCarburant, int annee, float poids, int prix) {
     SetImmatriculation(immatriculation);
     SetTypeCarburant(typeCarburant);
     m_annee = annee;
@@ -72,11 +72,11 @@ float Vehicle::GetPoids() { return m_poids; }
 int Vehicle::GetPrix() { return m_prix; }
 
 //Setters
-void Vehicle::SetImmatriculation(const char immatriculation[]) {
+void Vehicle::SetImmatriculation(const char *immatriculation) {
     copy(m_immatriculation, immatriculation);
 }
 
-void Vehicle::SetTypeCarburant(const char typeCarburant[]) {
+void Vehicle::SetTypeCarburant(const char *typeCarburant) {
     copy(m_typeCarburant, typeCarburant);
 }
 
@@ -123,17 +123,17 @@ Car::Car() : Vehicle() {
 }
 
 // Constructeur avec paramètres
-Car::Car(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, const char segment[], int nombrePortes) : Vehicle(immatriculation, typeCarburant, annee, poids, prix) 
+Car::Car(const char *immatriculation, const char *typeCarburant, int annee, float poids, int prix, const char *segment, int nombrePortes) : Vehicle(immatriculation, typeCarburant, annee, poids, prix) 
 {
     SetSegment(segment);
     m_nombrePortes = nombrePortes;
 }
 
 // Constructeur par copie
-Car::Car(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, const char segment[], int nombrePortes) : Vehicle(immatriculation, typeCarburant, annee, poids, prix) 
+Car::Car(Car &car) : Vehicle(car.GetImmatriculation(), car.GetTypeCarburant(), car.GetAnnee(), car.GetPoids(), car.GetPrix()) 
 {
-    SetSegment(segment);
-    m_nombrePortes = nombrePortes;
+    SetSegment(car.GetSegment());
+    m_nombrePortes = car.GetNombrePortes();
 }
 
 //Getters
@@ -141,7 +141,7 @@ const char* Car::GetSegment() { return m_segment; }
 int Car::GetNombrePortes() { return m_nombrePortes; }
 
 //Setters
-void Car::SetSegment(const char segment[]) {
+void Car::SetSegment(const char *segment) {
     copy(m_segment, segment);
 }
 
@@ -181,10 +181,17 @@ Motorcycle::Motorcycle() : Vehicle() {
 }
 
 // Constructeur avec paramètres
-Motorcycle::Motorcycle(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, const char typeMoto[], int nombreRoues) : Vehicle(immatriculation, typeCarburant, annee, poids, prix) 
+Motorcycle::Motorcycle(const char *immatriculation, const char *typeCarburant, int annee, float poids, int prix, const char *typeMoto, int nombreRoues) : Vehicle(immatriculation, typeCarburant, annee, poids, prix) 
 {
     SetTypeMoto(typeMoto);
     m_nombreRoues = nombreRoues;
+}
+
+// Constructeur par copie
+Motorcycle::Motorcycle(Motorcycle &moto) : Vehicle(moto.GetImmatriculation(), moto.GetTypeCarburant(), moto.GetAnnee(), moto.GetPoids(), moto.GetPrix()) 
+{
+    SetTypeMoto(moto.GetTypeMoto());
+    m_nombreRoues = moto.GetNombreRoues();
 }
 
 //Getters
@@ -192,7 +199,7 @@ const char* Motorcycle::GetTypeMoto() { return m_typeMoto; }
 int Motorcycle::GetNombreRoues() { return m_nombreRoues; }
 
 //Setters
-void Motorcycle::SetTypeMoto(const char typeMoto[]) {
+void Motorcycle::SetTypeMoto(const char *typeMoto) {
     copy(m_typeMoto, typeMoto);
 }
 
@@ -233,10 +240,17 @@ Truck::Truck() : Vehicle() {
 }
 
 // Constructeur avec paramètres
-Truck::Truck(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, int chargeUtile, int nombreEssieux) : Vehicle(immatriculation, typeCarburant, annee, poids, prix) 
+Truck::Truck(const char *immatriculation, const char *typeCarburant, int annee, float poids, int prix, int chargeUtile, int nombreEssieux) : Vehicle(immatriculation, typeCarburant, annee, poids, prix) 
 {
     m_chargeUtile = chargeUtile;
     m_nombreEssieux = nombreEssieux;
+}
+
+// Constructeur par copie
+Truck::Truck(Truck &truck) : Vehicle(truck.GetImmatriculation(), truck.GetTypeCarburant(), truck.GetAnnee(), truck.GetPoids(), truck.GetPrix()) 
+{
+    m_chargeUtile = truck.GetChargeUtile();
+    m_nombreEssieux = truck.GetNombreEssieux();
 }
 
 //Getters

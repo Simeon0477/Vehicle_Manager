@@ -17,7 +17,7 @@ class Vehicle{
     public:
         //Constructeurs
         Vehicle();
-        Vehicle(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix);
+        Vehicle(const char *immatriculation, const char *typeCarburant, int annee, float poids, int prix);
         Vehicle(Vehicle &vehicule);
 
         //Getters
@@ -28,8 +28,8 @@ class Vehicle{
         int GetPrix();
 
         //Setters
-        void SetImmatriculation(const char immatriculation[]);
-        void SetTypeCarburant(const char typeCarburant[]);
+        void SetImmatriculation(const char *immatriculation);
+        void SetTypeCarburant(const char *typeCarburant);
         void SetAnnee(int annee);
         void SetPoids(float poids);
         void SetPrix(int prix);
@@ -41,8 +41,11 @@ class Vehicle{
         float facteurCarburant();
         virtual float MaintenanceCost();
 
+        //Vérification du format des immatriculations
+        bool VerifyImmatriculation(const char *immatriculation);
+
         //Destructeur
-        ~Vehicle(){}
+        virtual ~Vehicle(){}
 };
 
 class Car : public Vehicle{
@@ -52,7 +55,7 @@ class Car : public Vehicle{
     public:
         //Constructeurs
         Car();
-        Car(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, const char segment[], int nombrePortes);
+        Car(const char *immatriculation, const char *typeCarburant, int annee, float poids, int prix, const char *segment, int nombrePortes);
         Car(Car &car);
 
         //Getters
@@ -60,7 +63,7 @@ class Car : public Vehicle{
         int GetNombrePortes();
 
         //Setters
-        void SetSegment(const char segment[]);
+        void SetSegment(const char *segment);
         void SetNombrePortes(int nombrePortes);
 
         //Affichage des  caractéristiques
@@ -80,14 +83,15 @@ class Motorcycle : public Vehicle{
     public:
         //Constructeurs
         Motorcycle();
-        Motorcycle(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, const char typeMoto[], int nombreRoues);
-        
+        Motorcycle(const char *immatriculation, const char *typeCarburant, int annee, float poids, int prix, const char *typeMoto, int nombreRoues);
+        Motorcycle(Motorcycle &moto);
+
         //Getters
         const char* GetTypeMoto();
         int GetNombreRoues();
 
         //Setters
-        void SetTypeMoto(const char typeMoto[]);
+        void SetTypeMoto(const char *typeMoto);
         void SetNombreRoues(int nombreRoues);
 
         //Affichage des  caractéristiques
@@ -107,8 +111,9 @@ class Truck : public Vehicle{
     public:
         //Constructeurs
         Truck();
-        Truck(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, int chargeUtile, int nombreEssieux);
-        
+        Truck(const char *immatriculation, const char *typeCarburant, int annee, float poids, int prix, int chargeUtile, int nombreEssieux);
+        Truck(Truck &truck);
+
         //Getters
         int GetChargeUtile();
         int GetNombreEssieux();
@@ -129,6 +134,9 @@ class Truck : public Vehicle{
 
 class Garage{
     private:
+        Vehicle** vehicules;
+        int taille;
+        int capacite;
     public:
         //Constructeurs
         Garage();
