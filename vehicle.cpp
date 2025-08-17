@@ -15,6 +15,19 @@ void copy(char *dest, const char *source){
     }
 }
 
+//Fonction de comparaison
+bool compare(const char* chaine1, const char* chaine2) {
+
+    while (*chaine1 && *chaine2) { 
+        if (*chaine1 != *chaine2)   
+            return false;
+        chaine1++; 
+        chaine2++; 
+    }
+
+    return (*chaine1 == '\0' && *chaine2 == '\0');
+}
+
 
 /*
 Classe Parent VEHICLE
@@ -38,7 +51,16 @@ Vehicle::Vehicle(const char immatriculation[], const char typeCarburant[], int a
     m_prix = prix;
 }
 
-//Getteurs
+//Constructeur par copie
+Vehicle::Vehicle(Vehicle &vehicule) {
+    SetImmatriculation(vehicule.GetImmatriculation());
+    SetTypeCarburant(vehicule.GetTypeCarburant());
+    m_annee = vehicule.GetAnnee();
+    m_poids = vehicule.GetPoids();
+    m_prix = vehicule.GetPrix();
+}
+
+//Getters
 const char* Vehicle::GetImmatriculation() { return m_immatriculation; }
 
 const char* Vehicle::GetTypeCarburant() { return m_typeCarburant; }
@@ -49,7 +71,7 @@ float Vehicle::GetPoids() { return m_poids; }
 
 int Vehicle::GetPrix() { return m_prix; }
 
-//Setteurs
+//Setters
 void Vehicle::SetImmatriculation(const char immatriculation[]) {
     copy(m_immatriculation, immatriculation);
 }
@@ -74,19 +96,21 @@ void Vehicle::ShowCharacteristics(){
 }
 
 //Calcul du coût d'entretien
-float MaintenanceCost(){
-    float facteurCarburant;
+float Vehicle::facteurCarburant(){
 
-    switch(m_typeCarburant){
-        case "essence": facteurCarburant = 1.0; break;
-        case "diesel": facteurCarburant = 1.05; break;
-        case "hybride": facteurCarburant = 0.9; break;
-        case "electrique": facteurCarburant = 0.7; break;
-        default: facteurCarburant = 1.0;
-    }
+    if(compare(m_typeCarburant, "essence")){ return 1.0; }
+    else if(compare(m_typeCarburant, "diesel")){ return 1.05; }
+    else if(compare(m_typeCarburant, "hybride")){ return 0.9; }
+    else if(compare(m_typeCarburant, "electrique")){ return 0.5; }
+    else { return 1.0; }
 
-    return (0.02 * m_prix + 5 * (2025 - m_annee) + 0.001 * m_poids) * facteurCarburant;
+    return 0;
 }
+
+float Vehicle::MaintenanceCost(){
+    return (0.02 * m_prix + 5 * (2025 - m_annee) + 0.001 * m_poids) * facteurCarburant();
+}
+
 
 /*
 Classe Dérivée Car
@@ -105,11 +129,18 @@ Car::Car(const char immatriculation[], const char typeCarburant[], int annee, fl
     m_nombrePortes = nombrePortes;
 }
 
-//Getteurs
+// Constructeur par copie
+Car::Car(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, const char segment[], int nombrePortes) : Vehicle(immatriculation, typeCarburant, annee, poids, prix) 
+{
+    SetSegment(segment);
+    m_nombrePortes = nombrePortes;
+}
+
+//Getters
 const char* Car::GetSegment() { return m_segment; }
 int Car::GetNombrePortes() { return m_nombrePortes; }
 
-//Setteurs
+//Setters
 void Car::SetSegment(const char segment[]) {
     copy(m_segment, segment);
 }
@@ -124,7 +155,20 @@ void Car::ShowCharacteristics(){
          <<endl;
 }
 
+//Calcul du coût d'entretien
+float Car::MaintenanceCost() {
+    int B_segment, B_portes;
 
+    if(compare(m_segment, "citadine")){ B_segment = 0; }
+    else if(compare(m_segment, "berline")){ B_segment = 20; }
+    else if(compare(m_segment, "SUV")){ B_segment = 50; }
+    else { B_segment = 0; }
+
+    if(m_nombrePortes == 3){ B_portes = -10; }
+    else { B_portes = 0; }
+
+    return (0.02 * GetPrix() + 5 * (2025 - GetAnnee()) + 0.001 * GetPoids() + B_segment + B_portes) * facteurCarburant();
+}
 
 /*
 Classe Dérivée Motorcycle
@@ -143,11 +187,11 @@ Motorcycle::Motorcycle(const char immatriculation[], const char typeCarburant[],
     m_nombreRoues = nombreRoues;
 }
 
-//Getteurs
+//Getters
 const char* Motorcycle::GetTypeMoto() { return m_typeMoto; }
 int Motorcycle::GetNombreRoues() { return m_nombreRoues; }
 
-//Setteurs
+//Setters
 void Motorcycle::SetTypeMoto(const char typeMoto[]) {
     copy(m_typeMoto, typeMoto);
 }
@@ -160,6 +204,21 @@ void Motorcycle::ShowCharacteristics(){
     cout << " - Type de moto : " << m_typeMoto
          << " - Nombre de roues : " << m_nombreRoues
          <<endl;
+}
+
+//Calcul du coût d'entretien
+float Motorcycle::MaintenanceCost() {
+    int B_type, B_roues;
+
+    if(compare(m_typeMoto, "sport")){ B_type = 40; }
+    else if(compare(m_typeMoto, "trail") || compare(m_typeMoto, "cross")){ B_type = 20; }
+    else if(compare(m_typeMoto, "custom")){ B_type = 10; }
+    else { B_type = 0; }
+
+    if(m_nombreRoues >= 3){ B_roues = 20; }
+    else { B_roues = 0; }
+
+    return (0.015 * GetPrix() + 3 * (2025 - GetAnnee()) + 0.0005 * GetPoids() + B_type + B_roues) * facteurCarburant();
 }
 
 
@@ -180,11 +239,11 @@ Truck::Truck(const char immatriculation[], const char typeCarburant[], int annee
     m_nombreEssieux = nombreEssieux;
 }
 
-//Getteurs
+//Getters
 int Truck::GetChargeUtile() { return m_chargeUtile; }
 int Truck::GetNombreEssieux() { return m_nombreEssieux; }
 
-//Setteurs
+//Setters
 void Truck::SetChargeUtile(int chargeUtile) { m_chargeUtile = chargeUtile; }
 void Truck::SetNombreEssieux(int nombreEssieux) { m_nombreEssieux = nombreEssieux; }
 
@@ -194,4 +253,9 @@ void Truck::ShowCharacteristics(){
     cout << " - Charge Utile : " << m_chargeUtile
          << " - Nombre d'Essieux : " << m_nombreEssieux
          <<endl;
+}
+
+//Calcul du coût d'entretien
+float Truck::MaintenanceCost() {
+    return (0.04 * GetPrix() + 8 * (2025 - GetAnnee()) + 0.0015 * GetPoids() + (m_chargeUtile / 100) + 50 * (m_nombreEssieux - 2)) * facteurCarburant();
 }

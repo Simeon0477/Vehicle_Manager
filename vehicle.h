@@ -4,6 +4,9 @@
 //Fonction de copie
 void copy(char *dest, const char *source);
 
+//Fonction de comparaison
+bool compare(const char* chaine1, const char* chaine2);
+
 class Vehicle{
     private:
         char m_immatriculation[10];
@@ -15,15 +18,16 @@ class Vehicle{
         //Constructeurs
         Vehicle();
         Vehicle(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix);
-        
-        //Getteurs
+        Vehicle(Vehicle &vehicule);
+
+        //Getters
         const char* GetImmatriculation();
         const char* GetTypeCarburant();
         int GetAnnee();
         float GetPoids();
         int GetPrix();
 
-        //Setteurs
+        //Setters
         void SetImmatriculation(const char immatriculation[]);
         void SetTypeCarburant(const char typeCarburant[]);
         void SetAnnee(int annee);
@@ -34,6 +38,7 @@ class Vehicle{
         virtual void ShowCharacteristics();
 
         //Calcul du cout d'entretien
+        float facteurCarburant();
         virtual float MaintenanceCost();
 
         //Destructeur
@@ -48,12 +53,13 @@ class Car : public Vehicle{
         //Constructeurs
         Car();
         Car(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, const char segment[], int nombrePortes);
+        Car(Car &car);
 
-        //Getteurs
+        //Getters
         const char* GetSegment();
         int GetNombrePortes();
 
-        //Setteurs
+        //Setters
         void SetSegment(const char segment[]);
         void SetNombrePortes(int nombrePortes);
 
@@ -61,7 +67,7 @@ class Car : public Vehicle{
         void ShowCharacteristics() override;
 
         //Calcul du cout d'entretien
-        virtual float MaintenanceCost() override;
+        float MaintenanceCost() override;
 
         //Destructeur
         ~Car(){}
@@ -76,11 +82,11 @@ class Motorcycle : public Vehicle{
         Motorcycle();
         Motorcycle(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, const char typeMoto[], int nombreRoues);
         
-        //Getteurs
+        //Getters
         const char* GetTypeMoto();
         int GetNombreRoues();
 
-        //Setteurs
+        //Setters
         void SetTypeMoto(const char typeMoto[]);
         void SetNombreRoues(int nombreRoues);
 
@@ -88,7 +94,7 @@ class Motorcycle : public Vehicle{
         void ShowCharacteristics() override;
 
         //Calcul du cout d'entretien
-        virtual float MaintenanceCost() override;
+        float MaintenanceCost() override;
         
         //Destructeur
         ~Motorcycle(){}
@@ -103,11 +109,11 @@ class Truck : public Vehicle{
         Truck();
         Truck(const char immatriculation[], const char typeCarburant[], int annee, float poids, int prix, int chargeUtile, int nombreEssieux);
         
-        //Getteurs
+        //Getters
         int GetChargeUtile();
         int GetNombreEssieux();
 
-        //Setteurs
+        //Setters
         void SetChargeUtile(int chargeUtile);
         void SetNombreEssieux(int nombreEssieux);
 
@@ -115,10 +121,20 @@ class Truck : public Vehicle{
         void ShowCharacteristics() override;
 
         //Calcul du cout d'entretien
-        virtual float MaintenanceCost() override;
+        float MaintenanceCost() override;
         
         //Destructeur
         ~Truck(){}
+};
+
+class Garage{
+    private:
+    public:
+        //Constructeurs
+        Garage();
+
+        //Destructeur
+        ~Garage(){}
 };
 
 #endif
