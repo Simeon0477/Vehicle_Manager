@@ -153,6 +153,9 @@ class Garage{
         //Affichage des caractéristiques de chaque véhicule
         void showVehicle();
 
+        //Recherche d'un véhicule
+        Vehicle* VehicleSearch();
+
         //Calcul du coût d'entretien d'un véhicule
         void CostCalculation(int index);
 

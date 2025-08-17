@@ -308,6 +308,7 @@ Vehicle* Garage::operator[](int index) {
     if (index >= 0 && index < m_size) {
         return m_vehicules[index]; 
     }
+    
     return nullptr;
 }
 
@@ -327,6 +328,19 @@ void Garage::CostCalculation(int index) {
          << " est : "
          << m_vehicules[index]->MaintenanceCost()
          << endl;
+}
+
+//Recherche d'un véhicule
+Vehicle* Garage::VehicleSearch() {
+    Vehicle* wanted = m_vehicules[0];
+
+    for(int i = 1; i < m_size; i++) {
+        if(compare(wanted->GetImmatriculation(), m_vehicules[i]->GetImmatriculation())){
+            wanted = m_vehicules[i];
+        }
+    }
+
+    return wanted;
 }
 
 //Destructeur
