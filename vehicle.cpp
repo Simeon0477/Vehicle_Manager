@@ -285,7 +285,7 @@ Garage::Garage() {
 }
 
 //Getters
-int Truck::GetSize() { return m_size; }
+int Garage::GetSize() { return m_size; }
 
 //Agrandissement du tableau
 void Garage::Growth(){
@@ -328,9 +328,9 @@ void Garage::showVehicle() {
 //Calcul du coût d'entretien d'un véhicule
 void Garage::CostCalculation(int index) {
     cout << "\nLe coût d'entretien annuel du véhicule immatriculé "
-         << m_vehicules[index]->GetImmatriculation()
+         << m_vehicules[index-1]->GetImmatriculation()
          << " est : "
-         << m_vehicules[index]->MaintenanceCost()
+         << m_vehicules[index-1]->MaintenanceCost()
          << endl;
 }
 
