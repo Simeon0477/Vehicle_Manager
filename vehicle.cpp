@@ -86,12 +86,12 @@ void Vehicle::SetPrix(int prix) { m_prix = prix; }
 
 //Affichage des  caractéristiques
 void Vehicle::ShowCharacteristics(){
-    cout << "Les Caractéristiques  du véhicule sont :\n"
-         << " - Numéro d'immatriculation : " << m_immatriculation
-         << " - Type de carburant : " << m_typeCarburant
-         << " - Année de fabrication :" << m_annee
-         << " - Poids : " << m_poids
-         << " - Prix : " << m_prix
+    cout << "* Les Caractéristiques  du véhicule sont :\n"
+         << "\n*   - Numéro d'immatriculation : " << m_immatriculation
+         << "\n*   - Type de carburant : " << m_typeCarburant
+         << "\n*   - Année de fabrication :" << m_annee
+         << "\n*   - Poids : " << m_poids
+         << "\n*   - Prix : " << m_prix
          <<endl;
 }
 
@@ -150,8 +150,8 @@ void Car::SetNombrePortes(int nombrePortes) { m_nombrePortes = nombrePortes; }
 //Affichage des  caractéristiques
 void Car::ShowCharacteristics(){
     Vehicle::ShowCharacteristics();
-    cout << " - Segment : " << m_segment
-         << " - Nombre de portes : " << m_nombrePortes
+    cout << "\n*   - Segment : " << m_segment
+         << "\n*   - Nombre de portes : " << m_nombrePortes
          <<endl;
 }
 
@@ -208,8 +208,8 @@ void Motorcycle::SetNombreRoues(int nombreRoues) { m_nombreRoues = nombreRoues; 
 //Affichage des  caractéristiques
 void Motorcycle::ShowCharacteristics(){
     Vehicle::ShowCharacteristics();
-    cout << " - Type de moto : " << m_typeMoto
-         << " - Nombre de roues : " << m_nombreRoues
+    cout << "\n*   - Type de moto : " << m_typeMoto
+         << "\n*   - Nombre de roues : " << m_nombreRoues
          <<endl;
 }
 
@@ -264,8 +264,8 @@ void Truck::SetNombreEssieux(int nombreEssieux) { m_nombreEssieux = nombreEssieu
 //Affichage des  caractéristiques
 void Truck::ShowCharacteristics(){
     Vehicle::ShowCharacteristics();
-    cout << " - Charge Utile : " << m_chargeUtile
-         << " - Nombre d'Essieux : " << m_nombreEssieux
+    cout << "\n*   - Charge Utile : " << m_chargeUtile
+         << "\n*   - Nombre d'Essieux : " << m_nombreEssieux
          <<endl;
 }
 
@@ -309,6 +309,24 @@ Vehicle* Garage::operator[](int index) {
         return m_vehicules[index]; 
     }
     return nullptr;
+}
+
+//Affichage des caractéristiques de chaque véhicule
+void Garage::showVehicle() {
+    cout << "\n\n CARACTERISTIQUES DES VEHICULES \n\n" << endl;
+    for(int i = 0; i < m_size; i++) {
+        cout << "Vehicule N° " << i << endl;
+        m_vehicules[i]->ShowCharacteristics();
+    }
+}
+
+//Calcul du coût d'entretien d'un véhicule
+void Garage::CostCalculation(int index) {
+    cout << "\nLe coût d'entretien annuel du véhicule immatriculé "
+         << m_vehicules[index]->GetImmatriculation()
+         << " est : "
+         << m_vehicules[index]->MaintenanceCost()
+         << endl;
 }
 
 //Destructeur

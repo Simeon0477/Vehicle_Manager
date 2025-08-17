@@ -150,6 +150,12 @@ class Garage{
         //Accès a un élément
         Vehicle* operator[](int index);
 
+        //Affichage des caractéristiques de chaque véhicule
+        void showVehicle();
+
+        //Calcul du coût d'entretien d'un véhicule
+        void CostCalculation(int index);
+
         //Destructeur
         ~Garage();
 };
