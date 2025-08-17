@@ -154,7 +154,7 @@ class Garage{
         void showVehicle();
 
         //Recherche d'un véhicule
-        Vehicle* VehicleSearch();
+        Vehicle* VehicleSearch(const char* immat);
 
         //Calcul du coût d'entretien d'un véhicule
         void CostCalculation(int index);

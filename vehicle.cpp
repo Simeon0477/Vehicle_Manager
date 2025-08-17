@@ -331,16 +331,14 @@ void Garage::CostCalculation(int index) {
 }
 
 //Recherche d'un véhicule
-Vehicle* Garage::VehicleSearch() {
-    Vehicle* wanted = m_vehicules[0];
-
-    for(int i = 1; i < m_size; i++) {
-        if(compare(wanted->GetImmatriculation(), m_vehicules[i]->GetImmatriculation())){
-            wanted = m_vehicules[i];
+Vehicle* Garage::VehicleSearch(const char* immat) {
+    for(int i = 0; i < m_size; i++) {
+        if(compare(immat, m_vehicules[i]->GetImmatriculation())){
+            return m_vehicules[i];
         }
     }
 
-    return wanted;
+    return nullptr;
 }
 
 //Destructeur
