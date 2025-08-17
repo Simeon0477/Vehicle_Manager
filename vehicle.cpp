@@ -273,3 +273,49 @@ void Truck::ShowCharacteristics(){
 float Truck::MaintenanceCost() {
     return (0.04 * GetPrix() + 8 * (2025 - GetAnnee()) + 0.0015 * GetPoids() + (m_chargeUtile / 100) + 50 * (m_nombreEssieux - 2)) * facteurCarburant();
 }
+
+/*
+Classe Garage
+*/
+
+// Constructeur par défaut
+Garage::Garage() {
+    m_vehicules = new Vehicle*[m_capacity];
+}
+
+//Agrandissement du tableau
+void Garage::Growth(){
+    if (m_size >= m_capacity) {
+        m_capacity += 10;
+        Vehicle** temp = new Vehicle*[m_capacity];
+        for (int i = 0; i < m_size; i++){
+            temp[i] = m_vehicules[i];
+        }
+        delete[] m_vehicules;
+        m_vehicules = temp;
+    }
+}
+
+//Ajout d'un véhicule
+void Garage::AddVehicle(Vehicle* vehicule) {
+    Growth();
+    m_vehicules[m_size] = vehicule;
+    m_size++;
+}
+
+//Accès a un élément
+Vehicle* Garage::operator[](int index) {
+    if (index >= 0 && index < m_size) {
+        return m_vehicules[index]; 
+    }
+    return nullptr;
+}
+
+//Destructeur
+Garage::~Garage() {
+    for(int i = 0; i < m_size; i++) {
+        delete m_vehicules[i];
+    }
+
+    delete[] m_vehicules;
+}

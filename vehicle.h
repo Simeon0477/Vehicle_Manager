@@ -134,15 +134,24 @@ class Truck : public Vehicle{
 
 class Garage{
     private:
-        Vehicle** vehicules;
-        int taille;
-        int capacite;
+        Vehicle** m_vehicules;
+        int m_size = 0;
+        int m_capacity = 10;
     public:
         //Constructeurs
         Garage();
 
+        //Agrandissement du tableau
+        void Growth(); 
+
+        //Ajout d'un véhicule
+        void AddVehicle(Vehicle* vehicule);
+
+        //Accès a un élément
+        Vehicle* operator[](int index);
+
         //Destructeur
-        ~Garage(){}
+        ~Garage();
 };
 
 #endif
